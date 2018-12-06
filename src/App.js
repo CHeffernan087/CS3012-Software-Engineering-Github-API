@@ -16,7 +16,9 @@ const navBar =
 {
     height:"8vh",
     width:"100vw",
-    backgroundColor:"white"
+    backgroundColor:"white",
+    marginBottom:"3vh",
+    boxShadow: "7px 5px 12px grey",
 }
 
 class App extends Component {
@@ -54,7 +56,8 @@ getCredentials(userName, password)
     this.getCredentials = this.getCredentials.bind(this)
  
   }
-
+//<GitHubCharts  display = {this.state.displayGithubStats} userName = {"CHeffernan087"} password = {"baconPancakes123"}/>
+                       
   render() {
 
     this.testFunction()
@@ -62,9 +65,10 @@ getCredentials(userName, password)
     return (
 
 
-      <div className="App">
+      <div className="App" style = {{fontFamily:"Lobster"}}>
             <div style = {navBar}></div>
             <GitHubCharts  display = {this.state.displayGithubStats} userName = {this.state.userName} password = {this.state.password}/>
+
             <InputField display = {this.state.displayGithubLogin} retrieveUserInfo = {this.getCredentials} />
       </div>
     );

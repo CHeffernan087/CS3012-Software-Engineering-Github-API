@@ -50,11 +50,15 @@ class PieChart extends Component {
 
   render() {
 
-    console.log("Chart Data: ",this.props.chartData)
+    if(this.props.loading==true && this.props.chartData.length>1)
+    {
+        this.props.getRidOfLoadingSign()
+    }
+
     return (
 
 
-      <div className="App">
+   
         <div style={chartWrapper}>
         <ResponsivePie
           data=
@@ -112,8 +116,9 @@ class PieChart extends Component {
           }
     />
         </div>
-      </div>
+      
     );
+    
   }
 }
 

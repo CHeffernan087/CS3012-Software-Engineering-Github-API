@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import GitHub from 'github-api';
 import { ResponsivePie } from 'nivo'
 import PieChart from './pieChart/pieChart';
-import { ClipLoader, BounceLoader } from 'react-spinners';
+import { ClipLoader, BounceLoader, GridLoader } from 'react-spinners';
 
 
 
@@ -26,7 +26,8 @@ const statBoard =
     width:"90vw",
     margin:"auto",
     backgroundColor:"white",
-    borderRadius:"20px"
+    borderRadius:"20px",
+    boxShadow: "7px 5px 12px grey",
 }
 
 const centerText = {
@@ -37,6 +38,27 @@ const centerText = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     fontSize: '.8em',
+  }
+
+  const quarter1 = 
+  {
+    height:"50%",
+    width:"50%",
+    backgroundColor:"red"
+  }
+  const quarter2 = 
+  {
+
+  }
+
+  const quarter3 = 
+  {
+
+  }
+
+  const quarter4 = 
+  {
+
   }
 
 class GitHubCharts extends Component {
@@ -92,7 +114,10 @@ runGitQuery()
     })
   })
 }
-
+renderChart()
+{
+    this.setState({loading:false})
+}
 getChartData()
 {
     
@@ -102,11 +127,12 @@ getChartData()
     let newItem = {
       "id": language,
       "label": language,
-      "value": this.state.languages[language],
+      "value": parseInt(this.state.languages[language]/1000),
   
     }
     data.unshift(newItem)
   }
+ 
   return data
 }
 
@@ -125,6 +151,7 @@ getChartData()
     }
     this.runGitQuery = this.runGitQuery.bind(this)
     this.getChartData = this.getChartData.bind(this)
+    this.renderChart = this.renderChart.bind(this)
   }
 
   render() {
@@ -142,16 +169,27 @@ getChartData()
         
       
         <div style = {statBoard}>
-        <div style = {centerText} >
-        <BounceLoader
-          className={this.state.className}
-          sizeUnit={"40px"}
-          size={1}
-          color={'#F5A623'}
-          loading={this.state.loading}
-        />
-        </div>
-            <PieChart chartData = {chartData}/>
+            <div style = {centerText} >
+                <div style = {{marginLeft:"25%"}}>
+                    <GridLoader
+                    className={this.state.className}
+                    margin = {"2px"}
+                    size={20}
+                    color={'#F5A623'}
+                    loading={this.state.loading}
+                    />
+                </div>
+                <br /><br />
+                <h1 style = {this.state.loading===true?{display:"initial"}:{display:"none"}}>loading your info...</h1>
+            </div >
+
+            <div style = {quarter1}></div>
+            <div style = {quarter2}></div>
+            <div style = {quarter3}></div>
+            <div style = {quarter4}></div>
+            <div style = {this.state.loading===true?{display:"none"}:{display:"initial"}}>
+                <PieChart getRidOfLoadingSign = {this.renderChart} loading = {this.state.loading} chartData = {chartData}/>
+            </div>
         </div>
       </div>
     );

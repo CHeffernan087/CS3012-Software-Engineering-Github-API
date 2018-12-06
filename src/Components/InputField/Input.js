@@ -42,7 +42,7 @@ const centerText = {
     left: '50%',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    fontSize: '.8em',
+    fontSize: '1.2em',
   }
 
   const imgStyle = 
