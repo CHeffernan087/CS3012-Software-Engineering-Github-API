@@ -56,8 +56,7 @@ getCredentials(userName, password)
     this.getCredentials = this.getCredentials.bind(this)
  
   }
-//<GitHubCharts  display = {this.state.displayGithubStats} userName = {"CHeffernan087"} password = {"baconPancakes123"}/>
-                       
+                   
   render() {
 
     this.testFunction()
