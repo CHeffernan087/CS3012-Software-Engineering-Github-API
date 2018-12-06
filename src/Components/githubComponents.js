@@ -4,9 +4,21 @@ import React, { Component } from 'react';
 import GitHub from 'github-api';
 import PieChart from './pieChart/pieChart';
 import { GridLoader } from 'react-spinners';
+import BarChart from './barChart/barChart';
 
 
-
+const languageAcronyms = 
+{
+    "JavaScript":"JS",
+    "TypeScript":"TS",
+    "C":"C",
+    "C++":"C++",
+    "HTML":"Web",
+    "Java":"J",
+    "Rust":"Rst",
+    "Haskell":"Hsk",
+    "Python":"Py"
+}
 
 
 function httpGet(theUrl,callback)
@@ -69,10 +81,9 @@ const centerText = {
   const centerChart = {
     margin: 0,
     position: 'absolute',
-   // top: '50%',
     left: '50%',
     marginRight: '-50%',
-    transform: 'translate(-50%, -0%)',
+    transform: 'translate(-50%, 0%)',
     fontSize: '.8em',
   }
 
@@ -106,6 +117,34 @@ getLangStats(repos,callback) {
      
     })
   };
+
+
+  getLangCardinalities(repos,callback) {
+    var langStats = {}
+    
+    for( let i in repos)
+      httpGet(repos[i].languages_url,function(langauges){
+      let langs = JSON.parse(langauges)
+      for(let j in langs)
+      {
+  
+        let key = j
+        if(langStats[key]==null)
+        {
+            langStats[key] = 1
+        }
+        else
+        {
+            langStats[key] = langStats[key] + 1
+        }
+      }
+  
+      if ((parseInt(i)+1) === Object.keys(repos).length){
+            callback(langStats)
+      }
+     
+    })
+  };
 runGitQuery()
 {
     var gh = new GitHub({
@@ -118,7 +157,9 @@ runGitQuery()
   var userObj = gh.getUser(this.props.userName);
   const that = this;
   let currentLangs =  this.state.languages
+  let langCardinalities = this.state.langCardinalities
   userObj.listRepos(function(err, repos) {
+    
     that.getLangStats(repos,function(langs){
       if(currentLangs[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
         that.setState({
@@ -126,6 +167,16 @@ runGitQuery()
         })
       }
     })
+
+
+    that.getLangCardinalities(repos,function(langs){
+        if(langCardinalities[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
+          that.setState({
+            langCardinalities:langs
+          })
+        }
+      })
+
   })
 }
 renderChart()
@@ -150,6 +201,26 @@ getChartData()
   return data
 }
 
+getBarData(){
+    
+
+
+      let data = []
+      for(let language in this.state.langCardinalities)
+      {
+        let newItem = {
+            "country": languageAcronyms[language],
+           "hot dogColor": "hsl(74, 70%, 50%)",
+           
+          }
+          newItem[language] =  this.state.langCardinalities[language]
+        data.unshift(newItem)
+      }
+     
+     
+      return data
+}
+
 
   constructor(props)
   {
@@ -158,6 +229,10 @@ getChartData()
       languages:
       {
         "No Data Found":100,
+      },
+      langCardinalities:
+      {
+        "No Data Found":0,
       },
       loading:true,
       color: '#000000',
@@ -170,12 +245,14 @@ getChartData()
 
   render() {
     let chartData = {}  
+    let barData = {}
     if(this.props.userName!==undefined){
-    this.runGitQuery()
-    chartData = this.getChartData()
+        this.runGitQuery()
+        chartData = this.getChartData()
+        barData = this.getBarData()
     }
      
-    
+    console.log(this.state.langCardinalities)
     return (
 
 
@@ -206,7 +283,9 @@ getChartData()
                  </div>
             </div>
             <div style = {quarter3}></div>
-            <div style = {quarter4}></div>
+            <div style = {quarter4}>
+                    <BarChart chartData = {barData}/>
+            </div>
             
         </div>
       </div>

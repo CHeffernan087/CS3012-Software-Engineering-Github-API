@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import GitHubCharts from './Components/githubComponents';
 import InputField from './Components/InputField/Input';
-
+import {ResponsiveBar } from 'nivo'
 const navBar = 
 {
     height:"8vh",
@@ -47,8 +47,8 @@ getCredentials(userName, password)
     this.getCredentials = this.getCredentials.bind(this)
  
   }
-   //<GitHubCharts  display = {this.state.displayGithubStats} userName = {"CHeffernan087"} password = {"baconPancakes123"}/>
-                    
+ 
+  
   render() {
 
     this.testFunction()
@@ -61,6 +61,7 @@ getCredentials(userName, password)
             <GitHubCharts  display = {this.state.displayGithubStats} userName = {this.state.userName} password = {this.state.password}/>
 
             <InputField display = {this.state.displayGithubLogin} retrieveUserInfo = {this.getCredentials} />
+           
       </div>
     );
   }
