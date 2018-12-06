@@ -2,9 +2,8 @@
 
 import React, { Component } from 'react';
 import GitHub from 'github-api';
-import { ResponsivePie } from 'nivo'
 import PieChart from './pieChart/pieChart';
-import { ClipLoader, BounceLoader, GridLoader } from 'react-spinners';
+import { GridLoader } from 'react-spinners';
 
 
 
@@ -44,21 +43,37 @@ const centerText = {
   {
     height:"50%",
     width:"50%",
-    backgroundColor:"red"
+    float:"left"
   }
   const quarter2 = 
   {
-
+    height:"50%",
+    width:"50%",
+    float:"left"
   }
 
   const quarter3 = 
   {
-
+    height:"50%",
+    width:"50%",
+    float:"left"
   }
 
   const quarter4 = 
   {
+    height:"50%",
+    width:"50%",
+    float:"left"
+  }
 
+  const centerChart = {
+    margin: 0,
+    position: 'absolute',
+   // top: '50%',
+    left: '50%',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -0%)',
+    fontSize: '.8em',
   }
 
 class GitHubCharts extends Component {
@@ -84,7 +99,7 @@ getLangStats(repos,callback) {
           CStats[key] = CStats[key] + langs[j]
         }
       }
-      console.log((parseInt(i)+1)+ " " + Object.keys(repos).length)
+  
       if ((parseInt(i)+1) === Object.keys(repos).length){
       callback(CStats)
       }
@@ -106,8 +121,7 @@ runGitQuery()
   userObj.listRepos(function(err, repos) {
     that.getLangStats(repos,function(langs){
       if(currentLangs[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
-        that.setState
-        ({
+        that.setState({
         languages:langs
         })
       }
@@ -184,12 +198,16 @@ getChartData()
             </div >
 
             <div style = {quarter1}></div>
-            <div style = {quarter2}></div>
+            <div style = {quarter2}>
+                <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
+                    <div style = {centerChart} >
+                        <PieChart getRidOfLoadingSign = {this.renderChart} loading = {this.state.loading} chartData = {chartData}/>
+                    </div>
+                 </div>
+            </div>
             <div style = {quarter3}></div>
             <div style = {quarter4}></div>
-            <div style = {this.state.loading===true?{display:"none"}:{display:"initial"}}>
-                <PieChart getRidOfLoadingSign = {this.renderChart} loading = {this.state.loading} chartData = {chartData}/>
-            </div>
+            
         </div>
       </div>
     );

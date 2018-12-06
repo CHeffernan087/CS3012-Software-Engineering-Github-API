@@ -11,7 +11,7 @@ const callbacks = providers.map(provider => {
     : `https://localhost:8080/${provider}/callback`
 })
 
-const [twitterURL, googleURL, facebookURL, githubURL] = callbacks
+//const [twitterURL, googleURL, facebookURL, githubURL] = callbacks
 
 // exports.CLIENT_ORIGIN = process.env.NODE_ENV === 'production'
 //   ? 'https://react-auth-twitter.netlify.com'

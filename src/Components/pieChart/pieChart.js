@@ -31,7 +31,7 @@ class PieChart extends Component {
             newEl["match"]["id"] = this.props.chartData[i]["id"]
             list.unshift(newEl)
         }
-        console.log(list)
+       
         return list
     }
   
@@ -50,7 +50,7 @@ class PieChart extends Component {
 
   render() {
 
-    if(this.props.loading==true && this.props.chartData.length>1)
+    if(this.props.loading===true && this.props.chartData.length>1)
     {
         this.props.getRidOfLoadingSign()
     }

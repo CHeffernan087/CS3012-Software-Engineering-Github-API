@@ -84,7 +84,7 @@ class InputField extends Component {
      <div style = {this.props.display===true?{display:"initial"}:{display:"none"}}>
         <div style = {wrapper}>
             <div style = {imageWrap}>
-                <img style ={imgStyle} src = "githubLogo.png"/>
+                <img style ={imgStyle} alt = "Github logo" src = "githubLogo.png"/>
             </div>
             <div style = {{height:"7%",paddingBottom:"6%"}}>
                 <input id = "userNameField" style = {inputBox} placeholder = "username"></input>

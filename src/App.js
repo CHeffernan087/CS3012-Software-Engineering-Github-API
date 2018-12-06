@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import GitHub from 'github-api';
-import logo from './logo.svg';
 import './App.css';
-import { ResponsivePie } from 'nivo'
-import io from 'socket.io-client'
-import OAuth from './OAuth.js'
-import { API_URL } from './config'
-import './App.css'
-import PieChart from './Components/pieChart/pieChart';
 import GitHubCharts from './Components/githubComponents';
 import InputField from './Components/InputField/Input';
-import { timingSafeEqual } from 'crypto';
 
 const navBar = 
 {
@@ -56,7 +47,8 @@ getCredentials(userName, password)
     this.getCredentials = this.getCredentials.bind(this)
  
   }
-                   
+   //<GitHubCharts  display = {this.state.displayGithubStats} userName = {"CHeffernan087"} password = {"baconPancakes123"}/>
+                    
   render() {
 
     this.testFunction()
