@@ -2,132 +2,70 @@ import React, { Component } from 'react';
 import GitHub from 'github-api';
 import logo from './logo.svg';
 import './App.css';
+import { ResponsivePie } from 'nivo'
+import io from 'socket.io-client'
+import OAuth from './OAuth.js'
+import { API_URL } from './config'
+import './App.css'
+import PieChart from './Components/pieChart/pieChart';
+import GitHubCharts from './Components/githubComponents';
+import InputField from './Components/InputField/Input';
+import { timingSafeEqual } from 'crypto';
 
-
-
-// // unauthenticated client
-// const gh = new GitHub();
-// let gist = gh.getGist(); // not a gist yet
-// gist.create({
-//    public: true,
-//    description: 'My first gist',
-//    files: {
-//       "file1.txt": {
-//          content: "Aren't gists great!"
-//       }
-//    }
-// }).then(function({data}) {
-//    // Promises!
-//    let createdGist = data;
-//    return gist.read();
-// }).then(function({data}) {
-//    let retrievedGist = data;
-
-//    console.log(data)
-//    // do interesting things
-// });
-
-
-//---------------------
-
- 
-// basic auth
-var gh = new GitHub({
-   username: 'CHeffernan087',
-   password: 'Hello087'
-   /* also acceptable:
-      token: 'MY_OAUTH_TOKEN'
-    */
-});
-
-
-var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
-me.listNotifications(function(err, notifications) {
-   // do some stuff
-});
-
-me.getProfile(function(err, details) {
-  console.log(details)
-});
- 
-var clayreimann = gh.getUser('CHeffernan087');
-clayreimann.listRepos(function(err, repos) {
-   // look at all the starred repos!
-
-   var langs = getLangStats(repos)
-   console.log(langs)
-
-   for(repo in repos)
-   {
-     var nextRepo = gh.getRepo('CHeffernan087', repos[repo].name)
-     console.log(repos[repo].name)
-     console.log(nextRepo)
-    
-   }
-});
-
- 
-var repo = gh.getRepo('CHeffernan087', "CS3012_Software_Engineering")
-repo.getDetails(function(err, dets) 
+const navBar = 
 {
-  console.log("here are the details ya bollix")
-   console.log(dets)
-});
+    height:"8vh",
+    width:"100vw",
+    backgroundColor:"white"
+}
 
-console.log(repo)
-
-
-
-var getLangStats = function getLangStats(repos) {
-  var CStats = {}
-  var mapper = function(ent){
-    console.log(ent)
-    var currentLangs = JSON.parse(httpGet(ent.languages_url));
-    console.log((currentLangs))
-    var index = 0
-    for( let i in currentLangs)
-    {
-      console.log(Object.keys(currentLangs)[index]+" : "+currentLangs[i])
-      index++;
-    }
-    return ent.language},
-  reducer = function(stats, lang) {stats[lang] = (stats[lang] || 0) + 1; return stats},
-  langStats = repos.map(mapper).reduce(reducer, {});
-  delete langStats['null'];
-  return Object.keys(langStats).sort(function(a,b){return langStats[b] - langStats[a]});
-};
+class App extends Component {
 
 
-
-function httpGet(theUrl)
+testFunction()
 {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false); // false for synchronous request
-    //xmlHttp.responseType = 'json'
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
+  
+}
+
+getCredentials(userName, password)
+{
+    this.setState({
+        userName:userName,
+        password:password,
+        displayGithubLogin :false,
+        displayGithubStats:true
+    })
+  
 }
 
 
 
-class App extends Component {
+  constructor(props)
+  {
+    super(props)
+    this.state = {
+      languages:
+      {
+        "python":100,
+      },
+      displayGithubLogin :true,
+      displayGithubStats:false,
+    }
+    this.getCredentials = this.getCredentials.bind(this)
+ 
+  }
+
   render() {
+
+    this.testFunction()
+
     return (
+
+
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+            <div style = {navBar}></div>
+            <GitHubCharts  display = {this.state.displayGithubStats} userName = {this.state.userName} password = {this.state.password}/>
+            <InputField display = {this.state.displayGithubLogin} retrieveUserInfo = {this.getCredentials} />
       </div>
     );
   }
