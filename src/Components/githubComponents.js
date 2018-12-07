@@ -5,6 +5,7 @@ import GitHub from 'github-api';
 import PieChart from './pieChart/pieChart';
 import { GridLoader } from 'react-spinners';
 import BarChart from './barChart/barChart';
+import Profile from './Profile/profile';
 
 
 const languageAcronyms = 
@@ -55,7 +56,8 @@ const centerText = {
   {
     height:"50%",
     width:"50%",
-    float:"left"
+    float:"left",
+
   }
   const quarter2 = 
   {
@@ -235,6 +237,14 @@ getBarData(){
       {
         "No Data Found":0,
       },
+      profile:
+      {
+        userName:"CHeffernan087",
+        profileURL:"./githubLogo.png",
+        numberOfRepos:10,
+        preferredLanguage:"Python",
+        mostProjectsCompletedIn:"HTML"
+      },
       loading:true,
       color: '#000000',
     className: ''
@@ -275,7 +285,9 @@ getBarData(){
                 <h1 style = {this.state.loading===true?{display:"initial"}:{display:"none"}}>loading your info...</h1>
             </div >
 
-            <div style = {quarter1}></div>
+            <div style = {quarter1}>
+                <Profile user = {this.state.profile}/>
+            </div>
             <div style = {quarter2}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                     <div style = {centerChart} >

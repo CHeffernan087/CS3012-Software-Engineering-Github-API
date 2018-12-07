@@ -41,8 +41,8 @@ getCredentials(userName, password)
       {
         "python":100,
       },
-      displayGithubLogin :true,
-      displayGithubStats:false,
+      displayGithubLogin :false,
+      displayGithubStats:true,
     }
     this.getCredentials = this.getCredentials.bind(this)
  

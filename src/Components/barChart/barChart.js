@@ -105,7 +105,7 @@ class BarChart extends Component {
             "tickSize": 5,
             "tickPadding": 5,
             "tickRotation": 0,
-            "legend": "country",
+            "legend": "Language Used",
             "legendPosition": "center",
             "legendOffset": 32
         }}

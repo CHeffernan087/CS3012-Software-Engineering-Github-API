@@ -74,7 +74,7 @@ class PieChart extends Component {
           innerRadius={0.5}
           padAngle={0.7}
           cornerRadius={3}
-          colors= 'oranges'
+          colors= 'set3'
           colorBy="id"
           borderWidth={1}
           borderColor="inherit:darker(0.2)"
