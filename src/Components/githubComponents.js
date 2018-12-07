@@ -75,7 +75,8 @@ const centerText = {
   {
     height:"50%",
     width:"50%",
-    float:"left"
+    float:"left",
+    position:"relative"
   }
 
   const centerChart = {
@@ -284,7 +285,11 @@ getBarData(){
             </div>
             <div style = {quarter3}></div>
             <div style = {quarter4}>
-                    <BarChart chartData = {barData}/>
+                <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
+                    <div style = {centerChart}>
+                        <BarChart chartData = {barData}/>
+                    </div>
+                </div>
             </div>
             
         </div>

@@ -13,7 +13,32 @@ const chartWrapper =
 }
 
 
+
 class BarChart extends Component {
+
+
+    getLegendTextures(keys)
+    {
+        let list = []
+
+        for(let i in keys){
+         
+            let newEl = {
+                "match": {
+                    "id": "Python"
+                },
+                "id": "dots"
+            }
+            if(i%2===1)
+            {
+                newEl["id"] = "lines"
+            }
+            newEl["match"]["id"] = keys[i]
+            list.unshift(newEl)
+        }
+       
+        return list
+    }
 
     constructor(props)
     {
@@ -29,21 +54,20 @@ class BarChart extends Component {
   
     render() {
  
+        let keys = []
+        if(this.props.chartData!==undefined){
+            for(let i in this.props.chartData)
+            {
+                keys.unshift(Object.keys(this.props.chartData[i])[2])
+            }
+        }
  return (
  <div style = {{height:"40vh",width:"50vh"}}>
 
         <ResponsiveBar
         data={ this.props.chartData
             }
-        keys={[
-            "hot dog",
-            "JavaScript",
-            "burger",
-            "sandwich",
-            "kebab",
-            "fries",
-            "donut"
-        ]}
+        keys={keys}
         indexBy="country"
         margin={{
             "top": 50,
@@ -52,14 +76,14 @@ class BarChart extends Component {
             "left": 60
         }}
         padding={0.3}
-        colors="nivo"
+        colors="pastel1"
         colorBy="id"
         defs={[
             {
                 "id": "dots",
                 "type": "patternDots",
                 "background": "inherit",
-                "color": "#38bcb2",
+                "color": "rgba(255, 255, 255, 0.3)",
                 "size": 4,
                 "padding": 1,
                 "stagger": true
@@ -68,26 +92,13 @@ class BarChart extends Component {
                 "id": "lines",
                 "type": "patternLines",
                 "background": "inherit",
-                "color": "#eed312",
+                "color": "rgba(255, 255, 255, 0.3)",
                 "rotation": -45,
                 "lineWidth": 6,
                 "spacing": 10
             }
         ]}
-        fill={[
-            {
-                "match": {
-                    "id": "fries"
-                },
-                "id": "dots"
-            },
-            {
-                "match": {
-                    "id": "sandwich"
-                },
-                "id": "lines"
-            }
-        ]}
+        fill={this.getLegendTextures(keys)}
         borderColor="inherit:darker(1.6)"
        
         axisBottom={{
@@ -95,15 +106,15 @@ class BarChart extends Component {
             "tickPadding": 5,
             "tickRotation": 0,
             "legend": "country",
-            "legendPosition": "middle",
+            "legendPosition": "center",
             "legendOffset": 32
         }}
         axisLeft={{
             "tickSize": 5,
             "tickPadding": 5,
             "tickRotation": 0,
-            "legend": "food",
-            "legendPosition": "middle",
+            "legend": "No. Of Projects",
+            "legendPosition": "center",
             "legendOffset": -40
         }}
         labelSkipWidth={12}
