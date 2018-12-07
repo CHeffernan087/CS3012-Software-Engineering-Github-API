@@ -3,6 +3,10 @@ import './App.css';
 import GitHubCharts from './Components/githubComponents';
 import InputField from './Components/InputField/Input';
 import {ResponsiveBar } from 'nivo'
+import Swal from 'sweetalert2'
+import swal from 'sweetalert2';
+
+
 const navBar = 
 {
     height:"8vh",
@@ -33,7 +37,27 @@ getCredentials(userName, password)
 
 resubmit()
 {
-    alert("Oh no, looks like your credentials were not valid")
+    //Swal("Oh no, looks like your credentials were not valid",'error')
+    //swal('Oops...', 'Something went wrong!', 'error')
+    //Swal('Ooops..', 'Could not validate your credentials.Check your connection and retry','error')
+    // Swal("Are all alerts like this?") 
+    // Swal({
+    //     title: 'Are you sure?',
+    //     text: "You won't be able to revert this!",
+    //     type: 'error',
+     
+    //     confirmButtonColor: '#3085d6',
+       
+    //   })
+
+    Swal({
+        
+        type: 'error',
+        title: 'Inavlid Credentials',
+        confirmButtonColor: 'orange',
+        text: 'Check your connection and retry'
+      })
+
     this.setState({
         displayGithubLogin :true,
       displayGithubStats:false,
@@ -59,7 +83,7 @@ resubmit()
  
   
   render() {
-
+ 
     this.testFunction()
 
     return (

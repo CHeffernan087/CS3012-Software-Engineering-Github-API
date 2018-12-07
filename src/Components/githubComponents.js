@@ -221,8 +221,7 @@ runGitQuery()
             numberOfRepos:repoNum
 
         }
-        alert("here")
-        console.log("Profile : ",personDetails )
+        
         that.setState({
             profile:personDetails
         })
@@ -363,16 +362,8 @@ getBarData(){
     }
      
     let that = this
-    alert(this.props.userName)
-    // if(this.state.loading && this.props.userName!==undefined)
-    // setTimeout(function()
-    // { 
-    //     if(that.state.loading)
-    //     {
-    //         alert("Still Loading!?")
-    //     }
-    //  }
-    // , 7000);
+ 
+  
     
     return (
 
