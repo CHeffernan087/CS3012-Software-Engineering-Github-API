@@ -87,10 +87,10 @@ class InputField extends Component {
                 <img style ={imgStyle} alt = "Github logo" src = "githubLogo.png"/>
             </div>
             <div style = {{height:"7%",paddingBottom:"6%"}}>
-                <input id = "userNameField" style = {inputBox} placeholder = "username"></input>
+                <input autocomplete="on" id = "userNameField" style = {inputBox} placeholder = "username"></input>
             </div>
             <div style = {{height:"7%"}}>
-                <input  id = "passwordField"  style = {inputBox} placeholder = "password" type = "password"></input>
+                <input autocomplete="on" id = "passwordField"  style = {inputBox} placeholder = "password" type = "password"></input>
             </div>
     
                 <div onClick = {this.submitClick} style = {submitButton}>

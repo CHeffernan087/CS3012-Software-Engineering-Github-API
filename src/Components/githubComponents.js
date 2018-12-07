@@ -150,6 +150,7 @@ getLangStats(repos,callback) {
   };
 runGitQuery()
 {
+    if(this.props.display){
     var gh = new GitHub({
         username: this.props.userName,
         password: this.props.password
@@ -165,7 +166,13 @@ runGitQuery()
   let langCardinalities = this.state.langCardinalities
   let repoNum = 0
   userObj.listRepos(function(err, repos) {
+    if(repos===undefined && that.props.display===true)
+    {
+        that.props.resubmit()
+    }
+    else{
     repoNum = repos.length
+  
     that.getLangStats(repos,function(langs){
       if(currentLangs[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
         
@@ -177,7 +184,9 @@ runGitQuery()
         
         })
       }
+    
     })
+
 
 
     that.getLangCardinalities(repos,function(langs){
@@ -194,30 +203,33 @@ runGitQuery()
       })
 
       
-
+    }
   })
 
 
   userObj.getProfile(function(err,dets){
-    if(that.state.profile.profileURL==="./githubLogo.png"){
-    let mostProjects = {}
-    let personDetails = 
-    {
-        userName: dets["login"],
-        preferredLanguage:"Undefined",
-        mostProjectsCompletedIn:mostProjects,
-        profileURL:dets["avatar_url"],
-        numberOfRepos:repoNum
+    if(dets!==undefined){
+        console.log("details : ", dets)
+        if(that.state.profile.profileURL==="./githubLogo.png"){
+        let mostProjects = {}
+        let personDetails = 
+        {
+            userName: dets["login"],
+            preferredLanguage:"Undefined",
+            mostProjectsCompletedIn:mostProjects,
+            profileURL:dets["avatar_url"],
+            numberOfRepos:repoNum
 
-    }
-    alert("here")
-    console.log("Profile : ",personDetails )
-    that.setState({
-        profile:personDetails
-      })
+        }
+        alert("here")
+        console.log("Profile : ",personDetails )
+        that.setState({
+            profile:personDetails
+        })
+        }
     }
   })
-
+}
 }
 findFavoriteLanguage(langs)
 {
@@ -350,7 +362,18 @@ getBarData(){
         barData = this.getBarData()
     }
      
-    console.log(this.state.langCardinalities)
+    let that = this
+    alert(this.props.userName)
+    // if(this.state.loading && this.props.userName!==undefined)
+    // setTimeout(function()
+    // { 
+    //     if(that.state.loading)
+    //     {
+    //         alert("Still Loading!?")
+    //     }
+    //  }
+    // , 7000);
+    
     return (
 
 
@@ -381,6 +404,7 @@ getBarData(){
             <div style = {quarter3}></div>
             <div style = {quarter2}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
+                    <div style = {{textAlign:"left",marginLeft:"6%",fontSize:"2em",color:"orange"}}>My Stats :</div>
                     <div style = {centerChart} >
                         <PieChart getRidOfLoadingSign = {this.renderChart} loading = {this.state.loading} chartData = {chartData}/>
                     </div>

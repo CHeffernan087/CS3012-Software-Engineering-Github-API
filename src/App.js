@@ -31,6 +31,14 @@ getCredentials(userName, password)
   
 }
 
+resubmit()
+{
+    alert("Oh no, looks like your credentials were not valid")
+    this.setState({
+        displayGithubLogin :true,
+      displayGithubStats:false,
+    })
+}
 
 
   constructor(props)
@@ -45,6 +53,7 @@ getCredentials(userName, password)
       displayGithubStats:false,
     }
     this.getCredentials = this.getCredentials.bind(this)
+    this.resubmit = this.resubmit.bind(this)
  
   }
  
@@ -58,7 +67,7 @@ getCredentials(userName, password)
 
       <div className="App" style = {{fontFamily:"Lobster"}}>
             <div style = {navBar}></div>
-            <GitHubCharts  display = {this.state.displayGithubStats} userName = {this.state.userName} password = {this.state.password}/>
+            <GitHubCharts  display = {this.state.displayGithubStats} userName = {this.state.userName} password = {this.state.password} resubmit ={this.resubmit}/>
 
             <InputField display = {this.state.displayGithubLogin} retrieveUserInfo = {this.getCredentials} />
            
