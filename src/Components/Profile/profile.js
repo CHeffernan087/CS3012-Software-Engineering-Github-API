@@ -10,7 +10,7 @@ const wrapper =
     position:"block",
    marginLeft:"0%",
     height:"100%",
-    width:"40%",
+    width:"45%",
     float:"left",
     
 }
@@ -18,7 +18,7 @@ const wrapper =
 const statsBox = 
 {
     float:"left",
-    width:"60%",
+    width:"55%",
     height:"100%",
 
 }
@@ -27,15 +27,16 @@ const centerText = {
     margin: 0,
     position: 'absolute',
     top: '50%',
-    left: '50%',
+    left:"10%",
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(0%, -50%)',
     fontSize: '1.2em',
+    color:"orange"
   }
 
 const heading = 
 {
-    height:"20%",
+    height:"27%",
     position:"relative",
     width:"100%",
     fontSize:"1.5em",
@@ -53,7 +54,16 @@ const profilePictureStyle = {
 
     
     height:"40%",
-    position:"relative"
+    position:"relative",
+    borderRadius:"100%",
+    marginLeft:"20%"
+}
+
+const nameWrapper = 
+{
+    marginTop:"5%",
+    fontSize:"1.7em",
+    marginLeft:"15%"
 }
 
 class Profile extends Component {
@@ -82,7 +92,10 @@ class Profile extends Component {
                     <div style = {centerText}> Dashboard </div>
                  </div>
                  <div style = {profilePictureStyle}>
-                    <img style = {{height:"100%",width:"auto"}}src = "./githubLogo.png"  />
+                    <img style = {{height:"100%",width:"auto",objectFit: "contain",borderRadius:"100%"}}src = {this.props.user.profileURL}  />
+                 </div>
+                 <div style = {nameWrapper}>
+                     <div>Conor Heffernan</div>
                  </div>
             </div>
             <div style = {statsBox}>

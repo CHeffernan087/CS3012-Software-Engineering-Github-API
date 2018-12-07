@@ -35,7 +35,7 @@ function httpGet(theUrl,callback)
 const statBoard = 
 {
     height:"85vh",
-    width:"90vw",
+    width:"75vw",
     margin:"auto",
     backgroundColor:"white",
     borderRadius:"20px",
@@ -157,16 +157,24 @@ runGitQuery()
      });
      
      
-  var userObj = gh.getUser(this.props.userName);
+  var userObj = gh.getUser(this.props.userName)
+
+ 
   const that = this;
   let currentLangs =  this.state.languages
   let langCardinalities = this.state.langCardinalities
+  let repoNum = 0
   userObj.listRepos(function(err, repos) {
-    
+    repoNum = repos.length
     that.getLangStats(repos,function(langs){
       if(currentLangs[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
+        
+
         that.setState({
-        languages:langs
+        languages:langs,
+        repos:repos
+
+        
         })
       }
     })
@@ -174,13 +182,71 @@ runGitQuery()
 
     that.getLangCardinalities(repos,function(langs){
         if(langCardinalities[Object.keys(currentLangs)[0]] !== langs[Object.keys(langs)[0]]){
-          that.setState({
-            langCardinalities:langs
-          })
+            
+            that.setState({
+                langCardinalities:langs,
+                
+                
+              })
         }
+        
+
       })
 
+      
+
   })
+
+
+  userObj.getProfile(function(err,dets){
+    if(that.state.profile.profileURL==="./githubLogo.png"){
+    let mostProjects = {}
+    let personDetails = 
+    {
+        userName: dets["login"],
+        preferredLanguage:"Undefined",
+        mostProjectsCompletedIn:mostProjects,
+        profileURL:dets["avatar_url"],
+        numberOfRepos:repoNum
+
+    }
+    alert("here")
+    console.log("Profile : ",personDetails )
+    that.setState({
+        profile:personDetails
+      })
+    }
+  })
+
+}
+findFavoriteLanguage(langs)
+{
+    var max = 0
+    let favLang = ""
+    for(let language in langs)
+    {
+        if(langs[language]>max)
+        {
+            favLang = language
+            max = langs[language]
+        }
+    }
+    return favLang
+}
+
+findMostProjects(langs)
+{
+    var max = 0
+    let favLang = ""
+    for(let language in langs)
+    {
+        if(langs[language]>max)
+        {
+            favLang = language
+            max = langs[language]
+        }
+    }
+    return favLang
 }
 renderChart()
 {
@@ -242,7 +308,7 @@ getBarData(){
         userName:"CHeffernan087",
         profileURL:"./githubLogo.png",
         numberOfRepos:10,
-        preferredLanguage:"Python",
+        preferredLanguage:"Undefined",
         mostProjectsCompletedIn:"HTML"
       },
       loading:true,
@@ -255,6 +321,27 @@ getBarData(){
   }
 
   render() {
+      let langs = Object.keys(this.state.languages)
+      let numLangs = Object.keys(this.state.langCardinalities)
+    if(this.state.profile.preferredLanguage==="Undefined" && langs.length>1 && numLangs.length>1)
+    {
+        let mostProjects = this.findMostProjects(this.state.langCardinalities)
+        let preferredLanguage = this.findFavoriteLanguage(this.state.languages)
+    
+        this.setState
+        ({
+            profile:{
+                userName:this.state.profile.userName,
+                preferredLanguage:preferredLanguage,
+                profileURL:this.state.profile.profileURL,
+                numberOfRepos:this.state.repos.length,
+                mostProjectsCompletedIn:mostProjects
+                
+                     }
+        })
+    }
+
+
     let chartData = {}  
     let barData = {}
     if(this.props.userName!==undefined){
@@ -286,8 +373,12 @@ getBarData(){
             </div >
 
             <div style = {quarter1}>
+                <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                 <Profile user = {this.state.profile}/>
+                </div>
             </div>
+            
+            <div style = {quarter3}></div>
             <div style = {quarter2}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                     <div style = {centerChart} >
@@ -295,7 +386,6 @@ getBarData(){
                     </div>
                  </div>
             </div>
-            <div style = {quarter3}></div>
             <div style = {quarter4}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                     <div style = {centerChart}>
