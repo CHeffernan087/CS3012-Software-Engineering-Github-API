@@ -404,6 +404,7 @@ getBarData(){
             <div style = {quarter4}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                     <div style = {centerChart}>
+                        <br />
                         <BarChart chartData = {barData}/>
                     </div>
                 </div>
