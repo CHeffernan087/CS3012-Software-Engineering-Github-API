@@ -54,21 +54,21 @@ const centerText = {
 
   const quarter1 = 
   {
-    height:"50%",
+    height:"45%",
     width:"50%",
     float:"left",
 
   }
   const quarter2 = 
   {
-    height:"50%",
+    height:"55%",
     width:"50%",
     float:"left"
   }
 
   const quarter3 = 
   {
-    height:"50%",
+    height:"45%",
     width:"50%",
     float:"left"
   }
@@ -395,7 +395,8 @@ getBarData(){
             <div style = {quarter3}></div>
             <div style = {quarter2}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
-                    <div style = {{textAlign:"left",marginLeft:"6%",fontSize:"2em",color:"orange"}}>My Stats :</div>
+                    <div style = {{textAlign:"left",marginLeft:"6%",fontSize:"2em",color:"orange"}}>My Stats :   <div style = {{textAlign:"left",fontSize:".5em",color:"black",marginLeft:"5%"}}>Characters Written (000's)</div></div>
+                    
                     <div style = {centerChart} >
                         <PieChart getRidOfLoadingSign = {this.renderChart} loading = {this.state.loading} chartData = {chartData}/>
                     </div>
@@ -404,6 +405,7 @@ getBarData(){
             <div style = {quarter4}>
                 <div style = {this.state.loading===true?{display:"none"}:{display:"initial",position:"relative"}}>
                     <div style = {centerChart}>
+                        <br />
                         <br />
                         <BarChart chartData = {barData}/>
                     </div>
